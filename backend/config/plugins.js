@@ -5,7 +5,7 @@ module.exports = ({ env }) => {
         provider: "strapi-provider-firebase-storage",
         providerOptions: {
           // @ts-ignore
-          serviceAccount: require("./serviceAccount.json"),
+          serviceAccount: require("../serviceAccount.json"),
           // Custom bucket name
           bucket: env(
             "STORAGE_BUCKET_URL",
