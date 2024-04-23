@@ -1,4 +1,4 @@
-import { Box, Container, Dialog, IconButton, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Dialog, IconButton, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -13,6 +13,7 @@ import Rating from '@mui/material/Rating';
 import { Close } from '@mui/icons-material';
 import ProductDetails from "./ProductDetails";
 import { useGetproductByNameQuery } from "../../Redux/product";
+import { motion } from "framer-motion";
 
 
 function Main() {
@@ -26,11 +27,14 @@ function Main() {
 
   const { data, error, isLoading } = useGetproductByNameQuery(myData);
 
-  
+  const [clickedProduct,setclickedProduct] = useState({});
+
 
 
   const handleAlignment = (event, newValue) => {
+    if(newValue !==null){
     setmyData(newValue)
+    }
     
 
   };
@@ -46,15 +50,36 @@ function Main() {
     setOpen(false);
   };
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ py:11,alignItems:"center" }}>
+      <CircularProgress />
+    </Box>
+    );
   }
   if (error) {
     // @ts-ignore
-    return <div>Error: {error.message}</div>;
+    return (
+    <Container sx={{
+      py:11,
+      textAlign:"center"
+
+    }}>
+        <Typography variant="h6">
+          {error.
+// @ts-ignore
+          error}
+          </Typography>
+
+        <Typography variant="h6">
+          Please Try Again Later
+          </Typography>
+    </Container>
+    );
   }
 
+
+
  if(data.data && data.data.length > 0){
-  console.log(data)
   return (
     <Container sx={{
         py:9
@@ -79,6 +104,14 @@ function Main() {
           exclusive
           onChange={handleAlignment}
           aria-label="text alignment"
+          sx={{
+            ".Mui-selected":{
+              border:"1px solid rgba(233,69,96,0.5)  !important",
+              color:"#e94560",
+              backgroundColor:"initial"
+            }
+            
+          }}
         >
           <ToggleButton
             className="myButton"
@@ -131,7 +164,13 @@ function Main() {
       <Stack direction={"row"} flexWrap={"wrap"} justifyContent={"space-between"} >
        {data.data.map((item)=>{
         return(
-            <Card key={item.id} 
+            <Card 
+            component={motion.section}
+            layout
+            initial={{transform:"scale(0)"}}
+            animate={{transform:"scale(1)"}}
+            transition={{duration:0.6,type:"spring",stiffness:50}}
+            key={item.id} 
             sx={{
                  maxWidth: 333, 
                  mt:6,
@@ -168,7 +207,13 @@ function Main() {
   
             <CardActions sx={{justifyContent:"space-between"}}>
   
-              <Button onClick={handleClickOpen} sx={{textTransform:"capitalize"}} size="large">
+              <Button onClick={()=>{
+
+                handleClickOpen()
+                setclickedProduct(item)
+              }}
+              
+              sx={{textTransform:"capitalize"}} size="large">
                   <AddShoppingCartIcon fontSize="small"/>
                   add to cart
               </Button>
@@ -195,19 +240,17 @@ function Main() {
         onClick={handleClose}
         
         sx={{
-              ":hover":{rotate:"180deg",transition:"0.3s",color:"red"},
-                position:"absolute",
-                top:0,
-                right:0,
+          ":hover":{rotate:"180deg",transition:"0.3s",color:"red"},
+          position:"absolute",
+          top:0,
+          right:0,
 
-                
-                
-            }}>
+                }}>
             <Close />
 
             </IconButton>
 
-            <ProductDetails/>
+            <ProductDetails clickedProduct={clickedProduct}/>
 
       </Dialog>
     </Container>

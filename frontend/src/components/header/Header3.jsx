@@ -174,8 +174,8 @@ function Header3() {
                 top:0,
                 right:0,
                 
-            }}>
-            <Close onClick={toggleDrawer("top", false)}/>
+            }}onClick={toggleDrawer("top", false)}>
+            <Close />
 
             </IconButton>
             

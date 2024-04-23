@@ -13,12 +13,12 @@ import IconSection from "./IconSection";
 const mySlider = [
     {
       text: "MEN",
-      link: "images/banner-15.jpg", // Adjusted image link with forward slash
+      link: "./images/banner-15.jpg", // Adjusted image link with forward slash
     },
    
     {
       text: "WOMEN",
-      link: "images/banner-25.jpg", // Adjusted image link with forward slash
+      link: "./images/banner-25.jpg", // Adjusted image link with forward slash
     },
   ];
 
@@ -158,7 +158,7 @@ function Hero() {
         <Box sx={{
             position:"relative"
         }}>
-          <img width={"100%"} src="images\banner-17.jpg" alt="" />
+          <img width={"100%"} src="./images\banner-17.jpg" alt="" />
 
           <Stack sx={{
             position:"absolute",
@@ -228,7 +228,7 @@ function Hero() {
         <Box sx={{
             position:"relative"
         }}>
-          <img  width={"100%"} src="images\banner-16.jpg" alt="" />
+          <img  width={"100%"} src="./images\banner-16.jpg" alt="" />
 
           <Stack sx={{
             position:"absolute",
